@@ -1,7 +1,9 @@
-// ignore_for_file: unused_field
+// ignore_for_file: unused_field, use_build_context_synchronously
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kavach/app/app.dart';
+import 'package:kavach/authentication/service.dart';
 import 'package:kavach/utils/kavach_theme.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -16,6 +18,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool obscureText = true;
+  bool _isloading = false;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -138,24 +141,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
             SizedBox(
               width: width,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      _isloading = true;
+                    });
+                    if (await Authentication.newUserSignUp(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                        context: context)) {
+                      setState(() {
+                        _isloading = false;
+                      });
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (_) {
+                        return const App();
+                      }));
+                    }
+                  }
+                },
                 style: KavachTheme.buttonStyle(
                   backColor: KavachTheme.redishPink,
                 ),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(
-                      17.0,
-                    ),
-                    child: Text(
-                      "REGISTER",
-                      style: KavachTheme.subtitleText(
-                          size: width / 24,
-                          weight: FontWeight.bold,
-                          color: KavachTheme.pureWhite),
-                    ),
-                  ),
-                ),
+                child: _isloading
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                            17.0,
+                          ),
+                          child: SizedBox(
+                            height: width / 15,
+                            width: width / 15,
+                            child: const CircularProgressIndicator(
+                                strokeWidth: 3, color: KavachTheme.pureWhite),
+                          ),
+                        ),
+                      )
+                    : Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                            17.0,
+                          ),
+                          child: Text(
+                            "REGISTER",
+                            style: KavachTheme.subtitleText(
+                                size: width / 24,
+                                weight: FontWeight.bold,
+                                color: KavachTheme.pureWhite),
+                          ),
+                        ),
+                      ),
               ),
             )
           ],

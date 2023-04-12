@@ -20,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool obscureText = true;
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -182,30 +183,53 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: width,
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (await Authentication.singnInWithEmail(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                          context: context)) {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) {
-                          return const App();
-                        }));
+                      if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          _isLoading = true;
+                        });
+                        if (await Authentication.singnInWithEmail(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            context: context)) {
+                          setState(() {
+                            _isLoading = false;
+                          });
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_) {
+                            return const App();
+                          }));
+                        }
                       }
                     },
                     style: KavachTheme.buttonStyle(
                         backColor: KavachTheme.redishPink),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(17.0),
-                        child: Text(
-                          "LOGIN",
-                          style: KavachTheme.subtitleText(
-                              size: width / 24,
-                              weight: FontWeight.bold,
-                              color: KavachTheme.pureWhite),
-                        ),
-                      ),
-                    ),
+                    child: _isLoading
+                        ? Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(
+                                17.0,
+                              ),
+                              child: SizedBox(
+                                height: width / 15,
+                                width: width / 15,
+                                child: const CircularProgressIndicator(
+                                    strokeWidth: 3,
+                                    color: KavachTheme.pureWhite),
+                              ),
+                            ),
+                          )
+                        : Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(17.0),
+                              child: Text(
+                                "LOGIN",
+                                style: KavachTheme.subtitleText(
+                                    size: width / 24,
+                                    weight: FontWeight.bold,
+                                    color: KavachTheme.pureWhite),
+                              ),
+                            ),
+                          ),
                   ),
                 )
               ],
