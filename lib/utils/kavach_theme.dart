@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class KavachTheme {
   static const Color lightPink = Color(0xffF06CAB);
-  static const Color darkPink = Color(0xffEA4E97);
+  static const Color darkPink = Color(0xffDB2B7A);
   static const Color redishPink = Color(0xff530F40);
   static const Color nearlyGrey = Color(0xff5A616B);
   static const Color lightGrey = Color(0xffB8B8B8);
@@ -83,16 +83,16 @@ class KavachTheme {
           borderSide: const BorderSide(color: Colors.redAccent)),
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: borderColor ?? lightPink)),
+          borderSide: BorderSide(color: borderColor ?? redishPink, width: 2)),
       enabledBorder: OutlineInputBorder(
         borderRadius: const BorderRadius.all(Radius.circular(15)),
         borderSide: BorderSide(color: Colors.grey.withOpacity(0.4)),
       ),
-      fillColor: bgColor ?? Colors.grey.withOpacity(0.04),
+      fillColor: bgColor ?? Colors.grey.withOpacity(0.01),
       hintText: hint,
       suffixIcon: suffixIcon,
       prefixIcon:
-          prefixIcon != null ? Icon(prefixIcon, color: lightPink) : null,
+          prefixIcon != null ? Icon(prefixIcon, color: redishPink) : null,
       hintStyle: subtitleText(
           size: fontSize, weight: FontWeight.normal, color: Colors.grey),
       filled: true,
