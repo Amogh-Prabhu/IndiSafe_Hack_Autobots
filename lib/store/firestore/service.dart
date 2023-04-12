@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../models/model.dart';
+import '../models/settings_model.dart';
 
 class FirestoreService {
   static Future<void> addData({required BuildContext context, required SettingsModel model}) async {

@@ -40,6 +40,4 @@ class SettingsModel {
       "audio_urld": audioUrls,
     };
   }
-
-  
 }
