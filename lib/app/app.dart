@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, library_private_types_in_public_api, unused_field, unnecessary_null_comparison
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kavach/helpline/helpline.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:kavach/track/service/location_service.dart';
 import 'package:kavach/record/record.dart';
@@ -120,7 +121,7 @@ class _AppState extends State<App> {
           ),
           Record(),
           Scaffold(),
-          Scaffold(),
+          Help(),
           Scaffold()
         ],
         items: [

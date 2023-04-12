@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kavach/app/app.dart';
 
 import 'login/login.dart';
@@ -10,6 +11,11 @@ import 'login/login.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  const orientations = [
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ];
+  SystemChrome.setPreferredOrientations(orientations);
   runApp(const MyApp());
 }
 
@@ -27,7 +33,6 @@ class _MyAppState extends State<MyApp> {
   checkUser() async {
     auth.authStateChanges().listen((User? user) {
       if (user != null) {
-        print(user);
         setState(() {
           isLoggedIn = true;
         });

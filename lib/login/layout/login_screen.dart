@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kavach/register/register.dart';
+import 'package:kavach/login/layout/register.dart';
 import 'package:kavach/app/app.dart';
 import 'package:kavach/authentication/service.dart';
 import 'package:kavach/utils/kavach_theme.dart';
@@ -20,41 +20,48 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool obscureText = true;
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: KavachTheme.pureWhite,
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(
+          20.0,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               "Don't have an account?",
               style: KavachTheme.subtitleText(
-                  size: width / 27,
-                  isShadow: true,
-                  weight: FontWeight.w500,
-                  color: KavachTheme.nearlyGrey),
+                size: width / 27,
+                isShadow: true,
+                weight: FontWeight.w500,
+                color: KavachTheme.nearlyGrey,
+              ),
             ),
             const SizedBox(
               width: 10,
             ),
             GestureDetector(
               onTap: () {
-                PersistentNavBarNavigator.pushNewScreen(context,
-                    screen: RegisterScreen(),
-                    withNavBar: false,
-                    pageTransitionAnimation: PageTransitionAnimation.scale);
+                PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: RegisterScreen(),
+                  withNavBar: false,
+                  pageTransitionAnimation: PageTransitionAnimation.scale,
+                );
               },
               child: Text(
                 "Sign-Up",
                 style: KavachTheme.subtitleText(
-                    size: width / 27,
-                    isShadow: true,
-                    weight: FontWeight.bold,
-                    color: KavachTheme.lightPink),
+                  size: width / 27,
+                  isShadow: true,
+                  weight: FontWeight.bold,
+                  color: KavachTheme.lightPink,
+                ),
               ),
             )
           ],
@@ -79,10 +86,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   "Kavach",
                   style: KavachTheme.titleText(
-                      size: width / 8,
-                      isShadow: true,
-                      weight: FontWeight.w600,
-                      color: KavachTheme.darkPink),
+                    size: width / 8,
+                    isShadow: true,
+                    weight: FontWeight.w600,
+                    color: KavachTheme.darkPink,
+                  ),
                 ),
                 Text(
                   "Women Safety App",
@@ -175,30 +183,53 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: width,
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (await Authentication.singnInWithEmail(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                          context: context)) {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) {
-                          return const App();
-                        }));
+                      if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          _isLoading = true;
+                        });
+                        if (await Authentication.singnInWithEmail(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            context: context)) {
+                          setState(() {
+                            _isLoading = false;
+                          });
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_) {
+                            return const App();
+                          }));
+                        }
                       }
                     },
                     style: KavachTheme.buttonStyle(
                         backColor: KavachTheme.redishPink),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(17.0),
-                        child: Text(
-                          "LOGIN",
-                          style: KavachTheme.subtitleText(
-                              size: width / 24,
-                              weight: FontWeight.bold,
-                              color: KavachTheme.pureWhite),
-                        ),
-                      ),
-                    ),
+                    child: _isLoading
+                        ? Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(
+                                17.0,
+                              ),
+                              child: SizedBox(
+                                height: width / 15,
+                                width: width / 15,
+                                child: const CircularProgressIndicator(
+                                    strokeWidth: 3,
+                                    color: KavachTheme.pureWhite),
+                              ),
+                            ),
+                          )
+                        : Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(17.0),
+                              child: Text(
+                                "LOGIN",
+                                style: KavachTheme.subtitleText(
+                                    size: width / 24,
+                                    weight: FontWeight.bold,
+                                    color: KavachTheme.pureWhite),
+                              ),
+                            ),
+                          ),
                   ),
                 )
               ],
