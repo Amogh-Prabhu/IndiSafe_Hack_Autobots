@@ -23,24 +23,12 @@ class _FriendsState extends State<Friends> {
         automaticallyImplyLeading: true,
         elevation: 0,
         centerTitle: true,
-        title: Row(
-          children: [
-            Image.asset(
-              "assets/images/image.jpg",
-              height: width / 12,
-              width: width / 12,
-            ),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              "Kavach",
-              style: KavachTheme.titleText(
-                  size: width / 13,
-                  weight: FontWeight.w600,
-                  color: KavachTheme.darkPink),
-            ),
-          ],
+        title: Text(
+          "Kavach",
+          style: KavachTheme.titleText(
+              size: width / 13,
+              weight: FontWeight.w600,
+              color: KavachTheme.darkPink),
         ),
       ),
       body: SafeArea(
@@ -81,13 +69,10 @@ class _FriendsState extends State<Friends> {
                         child: TextFormField(
                           autofocus: true,
                           controller: _emailController,
+                          keyboardType: TextInputType.phone,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Please enter email";
-                            } else if (!RegExp(
-                                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                                .hasMatch(value.trim())) {
-                              return "Email is not valid";
                             }
                             return null;
                           },
@@ -97,7 +82,7 @@ class _FriendsState extends State<Friends> {
                               weight: FontWeight.normal,
                               color: KavachTheme.nearlyGrey),
                           decoration: KavachTheme.waInputDecoration(
-                              hint: "Email",
+                              hint: "Phone number",
                               fontSize: width / 24,
                               prefixIcon: CupertinoIcons.person),
                         ),
