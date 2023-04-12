@@ -33,6 +33,73 @@ class _TrackState extends State<Track> {
     super.initState();
   }
 
+  void bringBottomSheet(double width) async {
+    await showModalBottomSheet(
+        context: context,
+        useSafeArea: true,
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        builder: (context) {
+          return Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                color: KavachTheme.pureWhite,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30))),
+            height: width * 1.6,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    width: width / 4,
+                    margin: EdgeInsets.only(bottom: 20),
+                    height: 7,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey.shade300,
+                    ),
+                  ),
+                  Text(
+                    "Select friends & share your live location",
+                    style: KavachTheme.subtitleText(
+                        size: width / 24, weight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10,),
+                  Text(
+                    "Tap to select",
+                    style: KavachTheme.subtitleText(
+                        size: width / 24,
+                        weight: FontWeight.bold,
+                        color: KavachTheme.lightGrey),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  CupertinoSearchTextField(),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(top: 20),
+                    child: Text(
+                      "All Contacts",
+                      style: KavachTheme.subtitleText(
+                          size: width / 26,
+                          weight: FontWeight.bold,
+                          color: KavachTheme.lightGrey),
+                    ),
+                  ),
+                  
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -42,24 +109,12 @@ class _TrackState extends State<Track> {
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.transparent,
         elevation: 0,
-        title: Row(
-          children: [
-            Image.asset(
-              "assets/images/image.jpg",
-              height: width / 12,
-              width: width / 12,
-            ),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              "Kavach",
-              style: KavachTheme.titleText(
-                  size: width / 13,
-                  weight: FontWeight.w600,
-                  color: KavachTheme.darkPink),
-            ),
-          ],
+        title: Text(
+          "Kavach",
+          style: KavachTheme.titleText(
+              size: width / 13,
+              weight: FontWeight.w600,
+              color: KavachTheme.darkPink),
         ),
         actions: [
           Icon(
@@ -127,7 +182,9 @@ class _TrackState extends State<Track> {
                       child: ElevatedButton(
                           style: KavachTheme.buttonStyle(
                               backColor: KavachTheme.lightPink),
-                          onPressed: () {},
+                          onPressed: () {
+                            bringBottomSheet(width);
+                          },
                           child: Text(
                             "Track Me",
                             style: KavachTheme.titleText(
