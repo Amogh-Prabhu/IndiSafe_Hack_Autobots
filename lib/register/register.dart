@@ -30,7 +30,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
       body: SafeArea(
           child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(
+          20.0,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -48,10 +50,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Text(
                   "Sign up now, Please enter your details! ",
                   style: KavachTheme.subtitleText(
-                      size: width / 25,
-                      isShadow: true,
-                      weight: FontWeight.normal,
-                      color: Colors.grey),
+                    size: width / 25,
+                    isShadow: true,
+                    weight: FontWeight.normal,
+                    color: Colors.grey,
+                  ),
                 ),
               ],
             ),
@@ -104,9 +107,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       obscureText: obscureText,
                       cursorColor: KavachTheme.lightPink,
                       style: KavachTheme.subtitleText(
-                          size: width / 24,
-                          weight: FontWeight.normal,
-                          color: KavachTheme.nearlyGrey),
+                        size: width / 24,
+                        weight: FontWeight.normal,
+                        color: KavachTheme.nearlyGrey,
+                      ),
                       decoration: KavachTheme.waInputDecoration(
                           suffixIcon: GestureDetector(
                             onTap: () {
@@ -140,7 +144,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(17.0),
+                    padding: const EdgeInsets.all(
+                      17.0,
+                    ),
                     child: Text(
                       "REGISTER",
                       style: KavachTheme.subtitleText(

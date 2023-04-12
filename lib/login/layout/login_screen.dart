@@ -26,35 +26,41 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: KavachTheme.pureWhite,
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(
+          20.0,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               "Don't have an account?",
               style: KavachTheme.subtitleText(
-                  size: width / 27,
-                  isShadow: true,
-                  weight: FontWeight.w500,
-                  color: KavachTheme.nearlyGrey),
+                size: width / 27,
+                isShadow: true,
+                weight: FontWeight.w500,
+                color: KavachTheme.nearlyGrey,
+              ),
             ),
             const SizedBox(
               width: 10,
             ),
             GestureDetector(
               onTap: () {
-                PersistentNavBarNavigator.pushNewScreen(context,
-                    screen: RegisterScreen(),
-                    withNavBar: false,
-                    pageTransitionAnimation: PageTransitionAnimation.scale);
+                PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: RegisterScreen(),
+                  withNavBar: false,
+                  pageTransitionAnimation: PageTransitionAnimation.scale,
+                );
               },
               child: Text(
                 "Sign-Up",
                 style: KavachTheme.subtitleText(
-                    size: width / 27,
-                    isShadow: true,
-                    weight: FontWeight.bold,
-                    color: KavachTheme.lightPink),
+                  size: width / 27,
+                  isShadow: true,
+                  weight: FontWeight.bold,
+                  color: KavachTheme.lightPink,
+                ),
               ),
             )
           ],
@@ -79,10 +85,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   "Kavach",
                   style: KavachTheme.titleText(
-                      size: width / 8,
-                      isShadow: true,
-                      weight: FontWeight.w600,
-                      color: KavachTheme.darkPink),
+                    size: width / 8,
+                    isShadow: true,
+                    weight: FontWeight.w600,
+                    color: KavachTheme.darkPink,
+                  ),
                 ),
                 Text(
                   "Women Safety App",
