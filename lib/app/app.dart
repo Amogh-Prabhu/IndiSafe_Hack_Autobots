@@ -114,7 +114,15 @@ class _AppState extends State<App> {
               ),
               topRight: Radius.circular(30)),
         ),
-        screens: [Track(), Record(), Scaffold(), Scaffold(), Scaffold()],
+        screens: [
+          Track(
+            position: position,
+          ),
+          Record(),
+          Scaffold(),
+          Scaffold(),
+          Scaffold()
+        ],
         items: [
           PersistentBottomNavBarItem(
               icon: Icon(CupertinoIcons.location_circle, size: size / 17),
