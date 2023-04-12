@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:kavach/helpline/widgets/help_card.dart';
 import 'package:kavach/utils/kavach_theme.dart';
 
 import '../selfdefence/selfdefence.dart';
@@ -35,7 +36,7 @@ class _HelpState extends State<Help> {
     "Road Accident",
     "Women Helpline"
   ];
-  List<Widget> i = [
+  List<Icon> i = [
     const Icon(Icons.local_police),
     const Icon(Icons.fire_truck),
     const Icon(Icons.child_care),
@@ -68,10 +69,12 @@ class _HelpState extends State<Help> {
         ),
         actions: [
           IconButton(
-            onPressed: () {Navigator.push(
+            onPressed: () {
+              Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => SelfDefence()),
-              );},
+              );
+            },
             icon: Icon(
               CupertinoIcons.video_camera,
               color: KavachTheme.nearlyGrey,
@@ -117,20 +120,16 @@ class _HelpState extends State<Help> {
           ),
           Expanded(
             child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
                 itemCount: details.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    child: ListTile(
-                        leading: i[index],
-                        trailing: IconButton(
-                          icon: const Icon(Icons.call),
-                          onPressed: () async {
-                            await _callNumber(num[index]);
-                          },
-                        ),
-                        title: Text(num[index]),
-                        subtitle: Text(details[index])),
-                  );
+                  return HelpCard(
+                      iconData: i[index],
+                      callback: () async {
+                        await _callNumber(num[index]);
+                      },
+                      subtitle: details[index],
+                      title: num[index]);
                 }),
           ),
         ],
