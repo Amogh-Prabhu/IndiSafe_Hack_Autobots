@@ -1,6 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../models/model.dart';
+import '../models/settings_model.dart';
 
 class SharedPreferenceService {
   static void putData(SettingsModel model) async {
