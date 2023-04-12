@@ -49,6 +49,7 @@ dependencies:
   google_maps_flutter: ^2.2.5
   geolocator: ^9.0.2
   lottie: ^2.3.2
+  background_sms: ^0.0.4
 
 dev_dependencies:
   flutter_test:
@@ -96,7 +97,7 @@ flutter:
       fonts:
         - asset: assets/fonts/SourceSansPro-Bold.ttf
         - asset: assets/fonts/Merriweather-Bold.ttf
-  
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
