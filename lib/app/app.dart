@@ -1,12 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, library_private_types_in_public_api
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kavach/record/audio/audio_record.dart';
+import 'package:kavach/record/record.dart';
 import 'package:kavach/track/track.dart';
 import 'package:kavach/utils/kavach_theme.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-
-import '../record/video/video_record.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
@@ -58,13 +56,7 @@ class _AppState extends State<App> {
               ),
               topRight: Radius.circular(30)),
         ),
-        screens: [
-          Track(),
-          AudioRecordPage(),
-          Scaffold(),
-          Scaffold(),
-          Scaffold()
-        ],
+        screens: [Track(), Record(), Scaffold(), Scaffold(), Scaffold()],
         items: [
           PersistentBottomNavBarItem(
               icon: Icon(CupertinoIcons.location_circle, size: size / 17),

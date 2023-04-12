@@ -1,6 +1,7 @@
-import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:kavach/store/storage/service.dart';
 import 'package:record/record.dart';
 
 class AudioService {
@@ -30,5 +31,19 @@ class AudioService {
 
   Future<void> resume() async {
     await _audioRecorder.resume();
+  }
+
+  Future<String?> captureForTime(Duration duration) async {
+    await start();
+    return await Future.delayed(const Duration(seconds: 1)).then((_) async {
+      String? path = await stop();
+      if (path != null) {
+        String? url = await StorageService.uploadFile(
+          file: File(path),
+          audio: true,
+        );
+        return url;
+      }
+    });
   }
 }
