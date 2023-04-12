@@ -1,61 +1,66 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:intl/intl.dart';
 
 class StorageService {
-  static final Reference rootRef = FirebaseStorage.instance.ref();
-
-  static Future<String> uploadFile({
+  static Future<String?> uploadFile({
     required File file,
-    required bool audio,
-    required bool video,
-    required bool image,
+    bool audio = false,
+    bool video = false,
+    bool image = false,
   }) async {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final String uid = auth.currentUser!.uid;
+    // final FirebaseAuth auth = FirebaseAuth.instance;
+    // final String uid = auth.currentUser!.uid;
+    String uid = "Test";
+    String date = DateFormat("d-m-y k:m:s").format(DateTime.now());
 
-    if (image) {
-      final Reference imagesRef = rootRef.child("UserFile/$uid/images");
-      imagesRef.putFile(file);
-      return imagesRef.getDownloadURL();
-    } else if (video) {
-      final Reference videoRef = rootRef.child("UserFile/$uid/videos");
-      videoRef.putFile(file);
-      return videoRef.getDownloadURL();
-    } else {
-      final Reference audioRef = rootRef.child("UserFile/$uid/audios");
-      audioRef.putFile(file);
-      return audioRef.getDownloadURL();
+    final Reference rootRef = FirebaseStorage.instance.ref();
+    try {
+      if (image) {
+        final Reference imagesRef =
+            rootRef.child("UserFiles/$uid/images/$date");
+        await imagesRef.putFile(file);
+        return await imagesRef.getDownloadURL();
+      } else if (video) {
+        final Reference videoRef = rootRef.child("UserFiles/$uid/videos/$date");
+        await videoRef.putFile(file);
+        return await videoRef.getDownloadURL();
+      } else {
+        final Reference audioRef = rootRef.child("UserFiles/$uid/audios/$date");
+        await audioRef.putFile(file);
+        return await audioRef.getDownloadURL();
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
-  static Future<List<String>> getFiles({
-    required bool audio,
-    required bool video,
-    required bool image,
+  static Future<List<Reference>> getFiles({
+    bool audio = false,
+    bool video = false,
+    bool image = false,
   }) async {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final String uid = auth.currentUser!.uid;
+    final Reference rootRef = FirebaseStorage.instance.ref();
+    // final FirebaseAuth auth = FirebaseAuth.instance;
+    // final String uid = auth.currentUser!.uid;
+    String uid = "Test";
 
     if (image) {
-      final Reference imagesRef = rootRef.child("UserFile/$uid/videos");
+      final Reference imagesRef = rootRef.child("UserFiles/$uid/images");
       return _getListFromReference(imagesRef);
     } else if (video) {
-      final Reference videoRef = rootRef.child("UserFile/$uid/videos");
+      final Reference videoRef = rootRef.child("UserFiles/$uid/videos");
       return _getListFromReference(videoRef);
     } else {
-      final Reference audioRef = rootRef.child("UserFile/$uid/videos");
+      final Reference audioRef = rootRef.child("UserFiles/$uid/audios/");
       return _getListFromReference(audioRef);
     }
   }
 
-  static Future<List<String>> _getListFromReference(Reference reference) async {
+  static Future<List<Reference>> _getListFromReference(
+      Reference reference) async {
     ListResult listResult = await reference.list();
-    List<String> list = [];
-    for (Reference ref in listResult.items) {
-      list.add(await ref.getDownloadURL());
-    }
-    return list;
+    return listResult.items;
   }
 }

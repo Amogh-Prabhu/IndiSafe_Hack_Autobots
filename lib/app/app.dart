@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:kavach/track/service/location_service.dart';
+import 'package:kavach/record/record.dart';
 import 'package:kavach/track/track.dart';
 import 'package:kavach/utils/kavach_theme.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -117,7 +118,7 @@ class _AppState extends State<App> {
           Track(
             position: position,
           ),
-          Scaffold(),
+          Record(),
           Scaffold(),
           Scaffold(),
           Scaffold()
