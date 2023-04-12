@@ -52,6 +52,9 @@ dependencies:
   lottie: ^2.3.2
   background_sms: ^0.0.4
   audio_waveforms: ^1.0.3
+  http: ^0.12.0+4
+  cached_network_image: ^2.0.0
+  webview_flutter: ^0.3.22+1
 
 dev_dependencies:
   flutter_test:

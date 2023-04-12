@@ -22,7 +22,8 @@ class HelpCard extends StatelessWidget {
       padding: const EdgeInsets.all(2),
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          border: Border.all(color: KavachTheme.lightGrey.withOpacity(0.5)),
+          border: Border.all(color: KavachTheme.lightGrey.withOpacity(1)),
+          color: KavachTheme.lightPink.withOpacity(0.05),
           borderRadius: BorderRadius.circular(10)),
       child: ListTile(
         leading: iconData,

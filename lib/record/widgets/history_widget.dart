@@ -21,6 +21,7 @@ class HistoryWidget extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           border: Border.all(color: KavachTheme.lightGrey.withOpacity(0.5)),
+          color: KavachTheme.lightPink.withOpacity(0.05),
           borderRadius: BorderRadius.circular(10)),
       child: ListTile(
         leading: Icon(

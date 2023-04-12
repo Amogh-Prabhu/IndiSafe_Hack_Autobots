@@ -68,7 +68,7 @@ class _HelpState extends State<Help> {
           style: KavachTheme.titleText(
               size: width / 13,
               weight: FontWeight.w600,
-              color: KavachTheme.lightPink),
+              color: KavachTheme.darkPink),
         ),
         actions: [
           IconButton(
@@ -85,7 +85,7 @@ class _HelpState extends State<Help> {
             width: 20,
           ),
           Icon(
-            Icons.menu,
+            Icons.newspaper,
             color: KavachTheme.nearlyGrey,
             size: width / 14,
           ),

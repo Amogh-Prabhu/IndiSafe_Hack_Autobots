@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:kavach/helpline/layout/selfdefence.dart';
 import 'package:kavach/track/layout/friends.dart';
 import 'package:kavach/track/service/location_service.dart';
 import 'package:kavach/utils/kavach_theme.dart';
@@ -116,16 +117,21 @@ class _TrackState extends State<Track> {
               color: KavachTheme.darkPink),
         ),
         actions: [
-          Icon(
-            CupertinoIcons.bell,
-            color: KavachTheme.nearlyGrey,
-            size: width / 16,
+          IconButton(
+            onPressed: () {
+              PersistentNavBarNavigator.pushNewScreen(context, screen: SelfDefence(),pageTransitionAnimation: PageTransitionAnimation.scale);
+            },
+            icon: Icon(
+              CupertinoIcons.video_camera,
+              color: KavachTheme.nearlyGrey,
+              size: width / 16,
+            ),
           ),
           const SizedBox(
             width: 20,
           ),
           Icon(
-            Icons.menu,
+            Icons.newspaper,
             color: KavachTheme.nearlyGrey,
             size: width / 14,
           ),
