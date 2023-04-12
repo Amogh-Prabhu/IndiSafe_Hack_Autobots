@@ -184,8 +184,6 @@ class _TrackState extends State<Track> {
                           style: KavachTheme.buttonStyle(
                               backColor: KavachTheme.lightPink),
                           onPressed: () async {
-                            await service
-                                .getLocationDangerLevel(widget.position);
                             bringBottomSheet(width);
                           },
                           child: Text(
