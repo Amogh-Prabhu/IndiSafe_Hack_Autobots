@@ -1,6 +1,6 @@
 class SettingsModel {
-  int uid;
-  List<num> contactNumbers;
+  String uid;
+  List<String> contactNumbers;
   List<String> triggers;
   List<String> actions;
   List<String> imageUrls;
