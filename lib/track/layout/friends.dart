@@ -69,13 +69,10 @@ class _FriendsState extends State<Friends> {
                         child: TextFormField(
                           autofocus: true,
                           controller: _emailController,
+                          keyboardType: TextInputType.phone,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Please enter email";
-                            } else if (!RegExp(
-                                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                                .hasMatch(value.trim())) {
-                              return "Email is not valid";
                             }
                             return null;
                           },
@@ -85,7 +82,7 @@ class _FriendsState extends State<Friends> {
                               weight: FontWeight.normal,
                               color: KavachTheme.nearlyGrey),
                           decoration: KavachTheme.waInputDecoration(
-                              hint: "Email",
+                              hint: "Phone number",
                               fontSize: width / 24,
                               prefixIcon: CupertinoIcons.person),
                         ),

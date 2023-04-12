@@ -18,8 +18,9 @@ class Authentication {
       await prefs.setString('uid', FirebaseAuth.instance.currentUser!.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        return newUserSignUp(
-            email: email, password: password, context: context);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('User not found'),
+            behavior: SnackBarBehavior.floating));
       } else if (e.code == 'wrong-password') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text('Password did not match'),

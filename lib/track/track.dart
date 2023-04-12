@@ -48,17 +48,53 @@ class _TrackState extends State<Track> {
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30))),
             height: width * 1.6,
-            child: Column(
-              children: [
-                Container(
-                  width: width / 4,
-                  height: 7,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.shade300,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    width: width / 4,
+                    margin: EdgeInsets.only(bottom: 20),
+                    height: 7,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey.shade300,
+                    ),
                   ),
-                ),
-              ],
+                  Text(
+                    "Select friends & share your live location",
+                    style: KavachTheme.subtitleText(
+                        size: width / 24, weight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10,),
+                  Text(
+                    "Tap to select",
+                    style: KavachTheme.subtitleText(
+                        size: width / 24,
+                        weight: FontWeight.bold,
+                        color: KavachTheme.lightGrey),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  CupertinoSearchTextField(),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(top: 20),
+                    child: Text(
+                      "All Contacts",
+                      style: KavachTheme.subtitleText(
+                          size: width / 26,
+                          weight: FontWeight.bold,
+                          color: KavachTheme.lightGrey),
+                    ),
+                  ),
+                  
+                ],
+              ),
             ),
           );
         });
