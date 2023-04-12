@@ -29,7 +29,9 @@ class Record extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(
+                  8.0,
+                ),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.of(context)
@@ -40,8 +42,9 @@ class Record extends StatelessWidget {
                     height: size.height / 7,
                     width: size.width / 1.2,
                     decoration: BoxDecoration(
-                        color: Colors.cyan[200],
-                        borderRadius: BorderRadius.circular(30)),
+                      color: Colors.cyan[200],
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                     child: Text(
                       "Audios",
                       style: KavachTheme.titleText(
@@ -53,14 +56,17 @@ class Record extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(
+                  8.0,
+                ),
                 child: Container(
                   alignment: Alignment.center,
                   height: size.height / 7,
                   width: size.width / 1.2,
                   decoration: BoxDecoration(
-                      color: Colors.red[200],
-                      borderRadius: BorderRadius.circular(30)),
+                    color: Colors.red[200],
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                   child: Text(
                     "Videos",
                     style: KavachTheme.titleText(
@@ -71,14 +77,17 @@ class Record extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(
+                  8.0,
+                ),
                 child: Container(
                   alignment: Alignment.center,
                   height: size.height / 7,
                   width: size.width / 1.2,
                   decoration: BoxDecoration(
-                      color: Colors.green[200],
-                      borderRadius: BorderRadius.circular(30)),
+                    color: Colors.green[200],
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                   child: Text(
                     "Images",
                     style: KavachTheme.titleText(
