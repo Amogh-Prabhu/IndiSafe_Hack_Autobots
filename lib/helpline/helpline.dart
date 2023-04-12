@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:kavach/utils/kavach_theme.dart';
 
+import '../selfdefence/selfdefence.dart';
+
 class Help extends StatefulWidget {
   const Help({super.key});
 
@@ -43,7 +45,7 @@ class _HelpState extends State<Help> {
     const Icon(Icons.train),
     const Icon(Icons.car_crash),
     const Icon(Icons.woman_2),
-    ];
+  ];
 
   _callNumber(String n) async {
     bool? res = await FlutterPhoneDirectCaller.callNumber(n);
@@ -53,7 +55,7 @@ class _HelpState extends State<Help> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar:AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.transparent,
         elevation: 0,
@@ -65,10 +67,16 @@ class _HelpState extends State<Help> {
               color: KavachTheme.lightPink),
         ),
         actions: [
-          Icon(
-            CupertinoIcons.bell,
-            color: KavachTheme.nearlyGrey,
-            size: width / 16,
+          IconButton(
+            onPressed: () {Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SelfDefence()),
+              );},
+            icon: Icon(
+              CupertinoIcons.video_camera,
+              color: KavachTheme.nearlyGrey,
+              size: width / 16,
+            ),
           ),
           const SizedBox(
             width: 20,
@@ -81,38 +89,37 @@ class _HelpState extends State<Help> {
           const SizedBox(
             width: 20,
           ),
-    ],
-
-),
-      body: 
-      Column(
-        children: [Padding(
-            padding: const EdgeInsets.only(top: 10,left: 15,right: 15,bottom: 15),
+        ],
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Track Me",
+                  "Call for Help",
                   style: KavachTheme.titleText(
                       size: width / 18,
                       weight: FontWeight.normal,
                       color: KavachTheme.nearlyGrey),
                 ),
-                Text("Share live location with your friends",
+                Text("In case of an emergency call the helpline",
                     style: KavachTheme.subtitleText(
                         size: width / 28,
                         weight: FontWeight.normal,
                         color: KavachTheme.nearlyGrey.withOpacity(0.7)))
               ],
-           ),
-          
-),
+            ),
+          ),
           Expanded(
             child: ListView.builder(
                 itemCount: details.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
-                    
                     child: ListTile(
                         leading: i[index],
                         trailing: IconButton(
