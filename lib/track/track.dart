@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kavach/track/layout/friends.dart';
@@ -69,7 +70,9 @@ class _TrackState extends State<Track> {
                     style: KavachTheme.subtitleText(
                         size: width / 24, weight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(
                     "Tap to select",
                     style: KavachTheme.subtitleText(
@@ -92,7 +95,6 @@ class _TrackState extends State<Track> {
                           color: KavachTheme.lightGrey),
                     ),
                   ),
-                  
                 ],
               ),
             ),
@@ -182,7 +184,9 @@ class _TrackState extends State<Track> {
                       child: ElevatedButton(
                           style: KavachTheme.buttonStyle(
                               backColor: KavachTheme.lightPink),
-                          onPressed: () {
+                          onPressed: () async {
+                            await service
+                                .getLocationDangerLevel(widget.position);
                             bringBottomSheet(width);
                           },
                           child: Text(
