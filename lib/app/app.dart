@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kavach/helpline/helpline.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:kavach/sos/sos.dart';
 import 'package:kavach/track/service/location_service.dart';
 import 'package:kavach/record/record.dart';
 import 'package:kavach/track/track.dart';
@@ -120,7 +121,7 @@ class _AppState extends State<App> {
             position: position,
           ),
           Record(),
-          Scaffold(),
+          SizedBox(),
           Help(),
           Scaffold()
         ],
@@ -146,12 +147,17 @@ class _AppState extends State<App> {
               inactiveColorPrimary: Colors.grey,
               activeColorSecondary: Colors.white,
               activeColorPrimary: Colors.redAccent,
+              onPressed: (context) {
+                Navigator.push(context!, MaterialPageRoute(builder: (_) {
+                  return SOS();
+                }));
+              },
               textStyle: KavachTheme.subtitleText(
                   size: size / 35,
                   weight: FontWeight.bold,
                   color: KavachTheme.lightGrey)),
           PersistentBottomNavBarItem(
-              icon: Icon(CupertinoIcons.book_fill, size: size / 17),
+              icon: Icon(CupertinoIcons.phone_arrow_up_right, size: size / 17),
               inactiveColorPrimary: Colors.grey,
               activeColorSecondary: KavachTheme.lightPink,
               activeColorPrimary: KavachTheme.redishPink,

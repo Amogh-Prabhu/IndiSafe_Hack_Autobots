@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kavach/app/app.dart';
+import 'package:kavach/sos/sos.dart';
 
 import 'login/login.dart';
 

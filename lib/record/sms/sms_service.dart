@@ -1,10 +1,14 @@
 import 'package:background_sms/background_sms.dart';
 
 class SmsService {
-  String draftMessage({String? videoURL, String? audioURL, String? imageURL, String? liveLocation}) {
+  String draftMessage(
+      {String? videoURL,
+      String? audioURL,
+      String? imageURL,
+      String? liveLocation}) {
     StringBuffer message =
         StringBuffer("It seems that your friend is in danger.");
-    if(liveLocation!=null) {
+    if (liveLocation != null) {
       message.write("This is her live location: $liveLocation");
     }
     if (videoURL != null) {

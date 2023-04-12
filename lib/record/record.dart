@@ -4,8 +4,10 @@ import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kavach/record/audio/audio_service.dart';
+import 'package:kavach/record/audio/audios.dart';
 import 'package:kavach/record/widgets/history_widget.dart';
 import 'package:kavach/utils/kavach_theme.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class Record extends StatefulWidget {
   const Record({super.key});
@@ -28,6 +30,7 @@ class _RecordState extends State<Record> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: KavachTheme.pureWhite,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
         padding: EdgeInsets.all(width / 6),
@@ -42,10 +45,14 @@ class _RecordState extends State<Record> {
                 .then((value) async {
               if (value != null) {
                 await controller.stop();
+                setState(() {
+                  _stop = !_stop;
+                });
               }
             });
           },
-          style: KavachTheme.buttonStyle(backColor: Colors.red),
+          style: KavachTheme.buttonStyle(
+              backColor: !_stop ? KavachTheme.redishPink : Colors.red),
           child: Padding(
             padding: const EdgeInsets.all(13.0),
             child: Text(
@@ -116,10 +123,15 @@ class _RecordState extends State<Record> {
           ),
           Column(children: [
             HistoryWidget(
+                callback: () {
+                  PersistentNavBarNavigator.pushNewScreen(context,
+                      screen: Audios());
+                },
                 iconData: Icons.audiotrack,
                 subtitle: "Tap to see history",
                 title: "Audio Recording"),
             HistoryWidget(
+                callback: () {},
                 iconData: Icons.video_collection,
                 subtitle: "Tap to see history",
                 title: "Video Recording"),

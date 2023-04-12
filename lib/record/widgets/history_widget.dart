@@ -7,11 +7,13 @@ class HistoryWidget extends StatelessWidget {
   HistoryWidget(
       {super.key,
       required this.iconData,
+      required this.callback,
       required this.subtitle,
       required this.title});
   String title;
   String subtitle;
   IconData iconData;
+  VoidCallback callback;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,10 @@ class HistoryWidget extends StatelessWidget {
               color: KavachTheme.nearlyGrey),
         ),
         trailing: IconButton(
-            onPressed: () {}, icon: const Icon(Icons.keyboard_arrow_right)),
+            onPressed: () {
+              callback();
+            },
+            icon: const Icon(Icons.keyboard_arrow_right)),
       ),
     );
   }

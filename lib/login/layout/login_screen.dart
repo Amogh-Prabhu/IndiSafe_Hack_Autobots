@@ -198,6 +198,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               MaterialPageRoute(builder: (_) {
                             return const App();
                           }));
+                        } else {
+                          setState(() {
+                            _isLoading = false;
+                          });
                         }
                       }
                     },

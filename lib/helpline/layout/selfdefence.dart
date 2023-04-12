@@ -62,6 +62,7 @@ class _SelfDefenceState extends State<SelfDefence> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: KavachTheme.pureWhite,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),

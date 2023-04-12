@@ -59,6 +59,7 @@ class _HelpState extends State<Help> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: KavachTheme.pureWhite,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.transparent,
@@ -73,7 +74,9 @@ class _HelpState extends State<Help> {
         actions: [
           IconButton(
             onPressed: () {
-              PersistentNavBarNavigator.pushNewScreen(context, screen: SelfDefence(),pageTransitionAnimation: PageTransitionAnimation.scale);
+              PersistentNavBarNavigator.pushNewScreen(context,
+                  screen: SelfDefence(),
+                  pageTransitionAnimation: PageTransitionAnimation.scale);
             },
             icon: Icon(
               CupertinoIcons.video_camera,
@@ -121,6 +124,7 @@ class _HelpState extends State<Help> {
           Expanded(
             child: ListView.builder(
                 physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: 40),
                 itemCount: details.length,
                 itemBuilder: (BuildContext context, int index) {
                   return HelpCard(
