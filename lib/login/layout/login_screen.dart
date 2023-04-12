@@ -1,7 +1,9 @@
-// ignore_for_file: unused_field
+// ignore_for_file: unused_field, use_build_context_synchronously
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kavach/app/app.dart';
+import 'package:kavach/authentication/service.dart';
 import 'package:kavach/utils/kavach_theme.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -133,10 +135,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: width / 2.5,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (await Authentication.singnInWithEmail(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                          context: context)) {
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (_) {
+                          return const App();
+                        }));
+                      }
+                    },
                     style: KavachTheme.buttonStyle(
-                      backColor: KavachTheme.redishPink,
-                    ),
+                        backColor: KavachTheme.redishPink),
                     child: Center(
                       child: Padding(
                         padding: const EdgeInsets.all(15.0),

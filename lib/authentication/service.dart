@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Authentication {
-  Future<bool> singnInWithEmail(
+  static Future<bool> singnInWithEmail(
       {required String email,
       required String password,
       required BuildContext context}) async {
@@ -18,8 +18,8 @@ class Authentication {
       await prefs.setString('uid', FirebaseAuth.instance.currentUser!.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('No user Found with this Email')));
+        return newUserSignUp(
+            email: email, password: password, context: context);
       } else if (e.code == 'wrong-password') {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Password did not match')));
@@ -29,17 +29,15 @@ class Authentication {
     return true;
   }
 
-  Future<bool> newUserSignUp(
+  static Future<bool> newUserSignUp(
       {required String email,
       required String password,
-      required String name,
       required BuildContext context}) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     try {
       await auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
       await FirebaseAuth.instance.currentUser!.updateEmail(email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -56,7 +54,7 @@ class Authentication {
     return true;
   }
 
-  Future<bool> signOut() async {
+  static Future<bool> signOut() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
       auth.signOut();
