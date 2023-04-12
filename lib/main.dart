@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Kavach',
-      home: isLoggedIn ? const App() : const Login(),
+      home: !isLoggedIn ? const App() : const Login(),
     );
   }
 }

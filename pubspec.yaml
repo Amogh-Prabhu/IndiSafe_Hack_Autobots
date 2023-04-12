@@ -49,7 +49,7 @@ dependencies:
   record: ^4.4.4
   # geocoding: 
   # location: ^4.4.0
-  geocoder: 
+  # geocoder: 
   url_launcher: ^6.1.10
   google_maps_flutter: ^2.2.5
   geolocator: ^9.0.2
