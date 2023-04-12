@@ -3,9 +3,11 @@
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kavach/helpline/layout/selfdefence.dart';
 import 'package:kavach/record/audio/audio_service.dart';
 import 'package:kavach/record/widgets/history_widget.dart';
 import 'package:kavach/utils/kavach_theme.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class Record extends StatefulWidget {
   const Record({super.key});
@@ -45,7 +47,7 @@ class _RecordState extends State<Record> {
               }
             });
           },
-          style: KavachTheme.buttonStyle(backColor: Colors.red),
+          style: KavachTheme.buttonStyle(backColor: KavachTheme.lightPink),
           child: Padding(
             padding: const EdgeInsets.all(13.0),
             child: Text(
@@ -70,16 +72,21 @@ class _RecordState extends State<Record> {
               color: KavachTheme.darkPink),
         ),
         actions: [
-          Icon(
-            CupertinoIcons.bell,
-            color: KavachTheme.nearlyGrey,
-            size: width / 16,
+          IconButton(
+            onPressed: () {
+              PersistentNavBarNavigator.pushNewScreen(context, screen: SelfDefence(),pageTransitionAnimation: PageTransitionAnimation.scale);
+            },
+            icon: Icon(
+              CupertinoIcons.video_camera,
+              color: KavachTheme.nearlyGrey,
+              size: width / 16,
+            ),
           ),
           const SizedBox(
             width: 20,
           ),
           Icon(
-            Icons.menu,
+            Icons.newspaper,
             color: KavachTheme.nearlyGrey,
             size: width / 14,
           ),
