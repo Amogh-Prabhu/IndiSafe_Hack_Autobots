@@ -1,10 +1,13 @@
+// ignore_for_file: prefer_const_constructors, unused_local_variable
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:kavach/helpline/widgets/help_card.dart';
 import 'package:kavach/utils/kavach_theme.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-import '../selfdefence/selfdefence.dart';
+import 'layout/selfdefence.dart';
 
 class Help extends StatefulWidget {
   const Help({super.key});
@@ -70,10 +73,7 @@ class _HelpState extends State<Help> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SelfDefence()),
-              );
+              PersistentNavBarNavigator.pushNewScreen(context, screen: SelfDefence(),pageTransitionAnimation: PageTransitionAnimation.scale);
             },
             icon: Icon(
               CupertinoIcons.video_camera,

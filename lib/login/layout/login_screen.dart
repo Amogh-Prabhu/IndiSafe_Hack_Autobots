@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kavach/register/register.dart';
+import 'package:kavach/login/layout/register.dart';
 import 'package:kavach/app/app.dart';
 import 'package:kavach/authentication/service.dart';
 import 'package:kavach/utils/kavach_theme.dart';

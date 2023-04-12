@@ -16,6 +16,7 @@ class Record extends StatefulWidget {
 
 class _RecordState extends State<Record> {
   RecorderController controller = RecorderController();
+  bool _stop = false;
 
   @override
   void dispose() {
@@ -32,6 +33,9 @@ class _RecordState extends State<Record> {
         padding: EdgeInsets.all(width / 6),
         child: ElevatedButton(
           onPressed: () async {
+            setState(() {
+              _stop = !_stop;
+            });
             await controller.record();
             AudioService()
                 .captureForTime(Duration(seconds: 5))
@@ -45,7 +49,7 @@ class _RecordState extends State<Record> {
           child: Padding(
             padding: const EdgeInsets.all(13.0),
             child: Text(
-              "Record Audio",
+              _stop ? "Stop Recording" : "Record Audio",
               style: KavachTheme.subtitleText(
                   size: width / 25,
                   weight: FontWeight.bold,
@@ -124,7 +128,8 @@ class _RecordState extends State<Record> {
             margin: EdgeInsets.only(top: 30),
             waveStyle: WaveStyle(
                 waveColor: KavachTheme.lightPink,
-                middleLineColor: KavachTheme.lightPink),
+                middleLineColor: KavachTheme.lightPink,
+                middleLineThickness: 0),
             size: Size(MediaQuery.of(context).size.width, width / 3),
             recorderController: controller,
             enableGesture: true,
