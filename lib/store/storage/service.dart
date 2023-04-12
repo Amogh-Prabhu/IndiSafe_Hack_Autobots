@@ -4,27 +4,27 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class StorageService {
-  static final Reference rootRef = FirebaseStorage.instance.ref();
-
   static Future<String> uploadFile({
     required File file,
-    required bool audio,
-    required bool video,
-    required bool image,
+    bool audio = false,
+    bool video = false,
+    bool image = false,
   }) async {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final String uid = auth.currentUser!.uid;
+    // final FirebaseAuth auth = FirebaseAuth.instance;
+    // final String uid = auth.currentUser!.uid;
+    String uid = "Test";
 
+    final Reference rootRef = FirebaseStorage.instance.ref();
     if (image) {
-      final Reference imagesRef = rootRef.child("UserFile/$uid/images");
+      final Reference imagesRef = rootRef.child("UserFiles/$uid/images");
       imagesRef.putFile(file);
       return imagesRef.getDownloadURL();
     } else if (video) {
-      final Reference videoRef = rootRef.child("UserFile/$uid/videos");
+      final Reference videoRef = rootRef.child("UserFiles/$uid/videos");
       videoRef.putFile(file);
       return videoRef.getDownloadURL();
     } else {
-      final Reference audioRef = rootRef.child("UserFile/$uid/audios");
+      final Reference audioRef = rootRef.child("UserFiles/$uid/audios");
       audioRef.putFile(file);
       return audioRef.getDownloadURL();
     }
@@ -35,17 +35,18 @@ class StorageService {
     required bool video,
     required bool image,
   }) async {
+    final Reference rootRef = FirebaseStorage.instance.ref();
     final FirebaseAuth auth = FirebaseAuth.instance;
     final String uid = auth.currentUser!.uid;
 
     if (image) {
-      final Reference imagesRef = rootRef.child("UserFile/$uid/videos");
+      final Reference imagesRef = rootRef.child("UserFiles/$uid/videos");
       return _getListFromReference(imagesRef);
     } else if (video) {
-      final Reference videoRef = rootRef.child("UserFile/$uid/videos");
+      final Reference videoRef = rootRef.child("UserFiles/$uid/videos");
       return _getListFromReference(videoRef);
     } else {
-      final Reference audioRef = rootRef.child("UserFile/$uid/videos");
+      final Reference audioRef = rootRef.child("UserFiles/$uid/videos");
       return _getListFromReference(audioRef);
     }
   }

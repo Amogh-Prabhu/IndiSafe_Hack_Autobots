@@ -40,6 +40,8 @@ dependencies:
   cloud_firestore: ^4.5.0
   firebase_storage: ^11.1.0
   shared_preferences: ^2.1.0
+  camera: ^0.10.4
+  record: ^4.4.4
 
 dev_dependencies:
   flutter_test:
@@ -85,7 +87,7 @@ flutter:
     - family: MerriWeather
       fonts:
         - asset: assets/fonts/Merriweather-Bold.ttf
-  
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
