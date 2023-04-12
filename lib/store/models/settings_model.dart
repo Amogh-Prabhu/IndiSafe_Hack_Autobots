@@ -1,8 +1,8 @@
 class SettingsModel {
-  String uid;
-  List<String> contactNumbers;
-  List<String> triggers;
-  List<String> actions;
+  String? uid;
+  List<String>? contactNumbers;
+  List<String>? triggers;
+  List<String>? actions;
 
   SettingsModel({
     required this.uid,
