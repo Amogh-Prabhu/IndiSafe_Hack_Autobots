@@ -25,7 +25,6 @@ class _LoginState extends State<Login> {
             width: width,
             decoration: BoxDecoration(
                 color: KavachTheme.redishPink,
-      
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(width / 3.5),
                     bottomLeft: Radius.circular(width / 3.5))),
