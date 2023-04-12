@@ -1,0 +1,1 @@
+import 'package:shake/shake.dart';

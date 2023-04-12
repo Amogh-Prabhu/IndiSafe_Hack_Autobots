@@ -71,18 +71,16 @@ class Record extends StatelessWidget {
             ),
           ),
 
-          Column(
-            children: [
-              HistoryWidget(
-                  iconData: Icons.audiotrack,
-                  subtitle: "Tap to see history",
-                  title: "Audio Recording"),
-              HistoryWidget(
-                  iconData: Icons.video_collection,
-                  subtitle: "Tap to see history",
-                  title: "Video Recording"),
-            ]
-          )
+          Column(children: [
+            HistoryWidget(
+                iconData: Icons.audiotrack,
+                subtitle: "Tap to see history",
+                title: "Audio Recording"),
+            HistoryWidget(
+                iconData: Icons.video_collection,
+                subtitle: "Tap to see history",
+                title: "Video Recording"),
+          ])
 
           // ElevatedButton(
           //   onPressed: () async {
