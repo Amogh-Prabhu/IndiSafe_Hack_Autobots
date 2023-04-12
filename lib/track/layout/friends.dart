@@ -23,24 +23,12 @@ class _FriendsState extends State<Friends> {
         automaticallyImplyLeading: true,
         elevation: 0,
         centerTitle: true,
-        title: Row(
-          children: [
-            Image.asset(
-              "assets/images/image.jpg",
-              height: width / 12,
-              width: width / 12,
-            ),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              "Kavach",
-              style: KavachTheme.titleText(
-                  size: width / 13,
-                  weight: FontWeight.w600,
-                  color: KavachTheme.darkPink),
-            ),
-          ],
+        title: Text(
+          "Kavach",
+          style: KavachTheme.titleText(
+              size: width / 13,
+              weight: FontWeight.w600,
+              color: KavachTheme.darkPink),
         ),
       ),
       body: SafeArea(

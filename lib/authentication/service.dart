@@ -18,11 +18,13 @@ class Authentication {
       await prefs.setString('uid', FirebaseAuth.instance.currentUser!.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('No user Found with this Email')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('No user Found with this Email'),
+            behavior: SnackBarBehavior.floating));
       } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Password did not match')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Password did not match'),
+            behavior: SnackBarBehavior.floating));
       }
       return false;
     }
@@ -43,11 +45,14 @@ class Authentication {
       await FirebaseAuth.instance.currentUser!.updateEmail(email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Password Provided is too weak')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Password Provided is too weak'),
+          behavior: SnackBarBehavior.floating,
+        ));
       } else if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Email Provided already Exists')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Email Provided already Exists'),
+            behavior: SnackBarBehavior.floating));
       }
       return false;
     } catch (e) {
