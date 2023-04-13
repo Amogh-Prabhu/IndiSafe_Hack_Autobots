@@ -15,7 +15,8 @@ class Authentication {
       await FirebaseAuth.instance.currentUser!.updateEmail(email);
 
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('uid', FirebaseAuth.instance.currentUser!.uid);
+      // await prefs.setString('uid', FirebaseAuth.instance.currentUser!.uid);
+      await prefs.setString('uid', "0");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(

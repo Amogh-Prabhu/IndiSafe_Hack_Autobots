@@ -4,10 +4,10 @@ import '../models/settings_model.dart';
 class SharedPreferenceService {
   static void putData(SettingsModel model) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('uid', model.uid!);
-    await prefs.setStringList('contact_numbers', model.contactNumbers!);
-    await prefs.setStringList('triggers', model.triggers!);
-    await prefs.setStringList('actions', model.actions!);
+    await prefs.setString('uid', model.uid);
+    await prefs.setStringList('contact_numbers', model.contactNumbers);
+    await prefs.setStringList('triggers', model.triggers);
+    await prefs.setStringList('actions', model.actions);
   }
 
   static Future<SettingsModel> getData() async {
@@ -19,10 +19,10 @@ class SharedPreferenceService {
     final List<String>? actions = prefs.getStringList('actions');
 
     return SettingsModel(
-      uid: uid,
-      contactNumbers: contactNumbers,
-      triggers: triggers,
-      actions: actions,
+      uid: uid ?? "0",
+      contactNumbers: contactNumbers ?? [],
+      triggers: triggers ?? [],
+      actions: actions ?? [],
     );
   }
 }

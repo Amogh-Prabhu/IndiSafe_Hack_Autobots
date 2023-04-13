@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kavach/helpline/helpline.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:kavach/settings/settings.dart';
 import 'package:kavach/track/service/location_service.dart';
 import 'package:kavach/record/record.dart';
 import 'package:kavach/track/track.dart';
@@ -122,7 +123,7 @@ class _AppState extends State<App> {
           Record(),
           Scaffold(),
           Help(),
-          Scaffold()
+          SettingsPage(),
         ],
         items: [
           PersistentBottomNavBarItem(
