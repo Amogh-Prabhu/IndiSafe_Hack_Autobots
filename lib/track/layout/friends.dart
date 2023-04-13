@@ -1,5 +1,11 @@
+// ignore_for_file: unused_field, prefer_final_fields, unused_local_variable, unused_import, avoid_print
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kavach/store/firestore/service.dart';
+import 'package:kavach/store/local_storage/service.dart';
+import 'package:kavach/store/models/settings_model.dart';
 import 'package:kavach/utils/kavach_theme.dart';
 
 class Friends extends StatefulWidget {
@@ -11,6 +17,34 @@ class Friends extends StatefulWidget {
 
 class _FriendsState extends State<Friends> {
   final TextEditingController _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
+  User currentUser = FirebaseAuth.instance.currentUser!;
+  late SettingsModel model;
+  List<String> contactNumbers = [];
+
+  Future<void> changeSettings({required String phone}) async {
+    model.contactNumbers.add(phone);
+    SharedPreferenceService.putData(model);
+    await FirestoreService.addSettings(model: model);
+  }
+
+  void setData() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    String uid = auth.currentUser!.uid;
+    SettingsModel data = await SharedPreferenceService.getData();
+    setState(() {
+      model = data;
+    });
+    print(model.toJson());
+  }
+
+  @override
+  void initState() {
+    setData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -20,18 +54,42 @@ class _FriendsState extends State<Friends> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(30),
         child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                _isLoading = true;
+              });
+              if (_formKey.currentState!.validate()) {
+                changeSettings(phone: _emailController.text).then((value) {
+                  setState(() {
+                    _isLoading = false;
+                  });
+                  Navigator.pop(context);
+                });
+              }
+            },
             style: KavachTheme.buttonStyle(backColor: KavachTheme.redishPink),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "Add Friend",
-                style: KavachTheme.subtitleText(
-                    size: width / 23,
-                    weight: FontWeight.normal,
-                    color: KavachTheme.pureWhite),
-              ),
-            )),
+            child: _isLoading
+                ? Padding(
+                    padding: const EdgeInsets.all(
+                      16.0,
+                    ),
+                    child: SizedBox(
+                      height: width / 15,
+                      width: width / 15,
+                      child: const CircularProgressIndicator(
+                          strokeWidth: 3, color: KavachTheme.pureWhite),
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      "Add Friend",
+                      style: KavachTheme.subtitleText(
+                          size: width / 23,
+                          weight: FontWeight.normal,
+                          color: KavachTheme.pureWhite),
+                    ),
+                  )),
       ),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -80,27 +138,32 @@ class _FriendsState extends State<Friends> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
-                      SizedBox(
-                        width: width,
-                        child: TextFormField(
-                          autofocus: true,
-                          controller: _emailController,
-                          keyboardType: TextInputType.phone,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please enter email";
-                            }
-                            return null;
-                          },
-                          cursorColor: KavachTheme.lightPink,
-                          style: KavachTheme.subtitleText(
-                              size: width / 24,
-                              weight: FontWeight.normal,
-                              color: KavachTheme.nearlyGrey),
-                          decoration: KavachTheme.waInputDecoration(
-                              hint: "Phone number",
-                              fontSize: width / 24,
-                              prefixIcon: CupertinoIcons.person),
+                      Form(
+                        key: _formKey,
+                        child: SizedBox(
+                          width: width,
+                          child: TextFormField(
+                            autofocus: true,
+                            controller: _emailController,
+                            keyboardType: TextInputType.phone,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please phone number";
+                              } else if (value.length != 10) {
+                                return "Phone number must be of 10 digit";
+                              }
+                              return null;
+                            },
+                            cursorColor: KavachTheme.lightPink,
+                            style: KavachTheme.subtitleText(
+                                size: width / 24,
+                                weight: FontWeight.normal,
+                                color: KavachTheme.nearlyGrey),
+                            decoration: KavachTheme.waInputDecoration(
+                                hint: "Phone number",
+                                fontSize: width / 24,
+                                prefixIcon: CupertinoIcons.person),
+                          ),
                         ),
                       ),
                       Padding(

@@ -163,7 +163,7 @@ class _AppState extends State<App> {
           Record(),
           SizedBox(),
           Help(),
-          SettingsPage(),
+          SettingsPage(), 
         ],
         items: [
           PersistentBottomNavBarItem(

@@ -1,11 +1,14 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable, unnecessary_null_comparison
+// ignore_for_file: prefer_const_constructors, must_be_immutable, unnecessary_null_comparison, avoid_print, avoid_unnecessary_containers
 
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kavach/helpline/layout/selfdefence.dart';
+import 'package:kavach/store/local_storage/service.dart';
+import 'package:kavach/store/models/settings_model.dart';
 import 'package:kavach/track/layout/friends.dart';
 import 'package:kavach/track/service/location_service.dart';
 import 'package:kavach/utils/kavach_theme.dart';
@@ -23,6 +26,20 @@ class _TrackState extends State<Track> {
       Completer<GoogleMapController>();
   LocationService service = LocationService();
   late CameraPosition _currentPosition;
+  User currentUser = FirebaseAuth.instance.currentUser!;
+  late SettingsModel model;
+  List<String> contactNumbers = [];
+  List<bool> selectors = [];
+
+  Future<void> getData() async {
+    var data = await SharedPreferenceService.getData();
+    setState(() {
+      model = data;
+      for (int i = 0; i < model.contactNumbers.length; i++) {
+        selectors.add(false);
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -42,6 +59,7 @@ class _TrackState extends State<Track> {
   }
 
   void bringBottomSheet(double width) async {
+    getData();
     await showModalBottomSheet(
         context: context,
         useSafeArea: true,
@@ -93,7 +111,7 @@ class _TrackState extends State<Track> {
                   CupertinoSearchTextField(),
                   Container(
                     alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.only(top: 20),
+                    margin: EdgeInsets.only(top: 20, bottom: 20),
                     child: Text(
                       "All Contacts",
                       style: KavachTheme.subtitleText(
@@ -102,6 +120,58 @@ class _TrackState extends State<Track> {
                           color: KavachTheme.lightGrey),
                     ),
                   ),
+                  SizedBox(
+                    height: width,
+                    child: ListView.separated(
+                        padding: EdgeInsets.only(bottom: 20),
+                        physics: const BouncingScrollPhysics(),
+                        separatorBuilder: (context, index) {
+                          return Divider(
+                            color: KavachTheme.lightGrey,
+                          );
+                        },
+                        itemCount: model.contactNumbers.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      "+91",
+                                      style: KavachTheme.titleText(
+                                          size: width / 24,
+                                          weight: FontWeight.bold),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      model.contactNumbers[index],
+                                      style: KavachTheme.subtitleText(
+                                          size: width / 24,
+                                          weight: FontWeight.normal),
+                                    ),
+                                  ],
+                                ),
+                                Spacer(),
+                                Checkbox(
+                                  side:
+                                      BorderSide(color: KavachTheme.lightGrey),
+                                  value: selectors[index],
+                                  onChanged: (x) {
+                                    setState(() {
+                                      selectors[index] = !selectors[index];
+                                    });
+                                  },
+                                ), //Checkbox
+                              ],
+                            ),
+                          );
+                        }),
+                  )
                 ],
               ),
             ),
