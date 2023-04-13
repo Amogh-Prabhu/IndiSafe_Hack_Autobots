@@ -1,8 +1,8 @@
 class SettingsModel {
-  String? uid;
-  List<String>? contactNumbers;
-  List<String>? triggers;
-  List<String>? actions;
+  String uid;
+  List<String> contactNumbers;
+  List<String> triggers;
+  List<String> actions;
 
   SettingsModel({
     required this.uid,
@@ -14,7 +14,7 @@ class SettingsModel {
   factory SettingsModel.fromJson(Map<String, dynamic> json) {
     return SettingsModel(
       uid: json['uid'],
-      contactNumbers: json['contactNumbers'],
+      contactNumbers: json['contact_numbers'],
       triggers: json['triggers'],
       actions: json['actions'],
     );

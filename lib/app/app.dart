@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, library_private_types_in_public_api, unused_field, unnecessary_null_comparison, avoid_print
-import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -164,7 +163,7 @@ class _AppState extends State<App> {
           Record(),
           SizedBox(),
           Help(),
-          SettingsPage()
+          SettingsPage(),
         ],
         items: [
           PersistentBottomNavBarItem(
