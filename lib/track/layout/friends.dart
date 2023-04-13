@@ -17,6 +17,22 @@ class _FriendsState extends State<Friends> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: KavachTheme.pureWhite,
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(30),
+        child: ElevatedButton(
+            onPressed: () {},
+            style: KavachTheme.buttonStyle(backColor: KavachTheme.redishPink),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "Add Friend",
+                style: KavachTheme.subtitleText(
+                    size: width / 23,
+                    weight: FontWeight.normal,
+                    color: KavachTheme.pureWhite),
+              ),
+            )),
+      ),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: KavachTheme.darkishGrey,
@@ -146,7 +162,7 @@ class _FriendsState extends State<Friends> {
                                   ],
                                 ),
                                 Text(
-                                  "Friend is someone who receives your live location when you use thr Track Me feature.",
+                                  "Friend is someone who receives your live location when you use the Track Me feature.",
                                   style: KavachTheme.subtitleText(
                                       size: width / 30,
                                       weight: FontWeight.normal,
@@ -171,7 +187,7 @@ class _FriendsState extends State<Friends> {
                                       width: 8,
                                     ),
                                     Text(
-                                      "Who is a friend?",
+                                      "Who is an SOS contact?",
                                       style: KavachTheme.subtitleText(
                                           size: width / 30,
                                           weight: FontWeight.bold,
@@ -180,7 +196,7 @@ class _FriendsState extends State<Friends> {
                                   ],
                                 ),
                                 Text(
-                                  "An SOS contact receives your SOS alerts during an emergency",
+                                  "An SOS contact receives your SOS alerts during an emergency.",
                                   style: KavachTheme.subtitleText(
                                       size: width / 30,
                                       weight: FontWeight.normal,

@@ -1,9 +1,19 @@
-// ignore_for_file: unused_element
+// ignore_for_file: unused_element, body_might_complete_normally_nullable, unused_import, unnecessary_question_mark
 
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
 
 class LocationService {
-  Future<Position> determinePosition() async {
+  final LocationSettings locationSettings = const LocationSettings(
+    accuracy: LocationAccuracy.bestForNavigation,
+  );
+
+  Future<void> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -23,6 +33,29 @@ class LocationService {
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-    return await Geolocator.getCurrentPosition();
+  }
+
+  Future<dynamic?> getLocation(Position position) async {
+    String url =
+        'https://api.opencagedata.com/geocode/v1/json?q=${position.latitude}+${position.longitude}&key=250d7e0d05b64342866a536d06ea24a0';
+    http.Response res = await http.get(Uri.parse(url));
+    if (res.statusCode == 200) {
+      dynamic dt = json.decode(res.body);
+      if (dt['results'].length > 0) {
+        return dt['results'][0]['components'] ?? '';
+      }
+    }
+  }
+
+  Future<int?> getLocationDangerLevel(Position position) async {
+    final String response = await rootBundle.loadString('assets/district.json');
+    final data = await json.decode(response);
+    dynamic location = await getLocation(position);
+    String district = location['city'];
+    try {
+      return int.parse(data[district.toUpperCase()]);
+    } catch (e) {
+      print(e);
+    }
   }
 }

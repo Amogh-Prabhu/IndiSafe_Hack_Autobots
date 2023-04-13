@@ -33,7 +33,9 @@ class _AudiosState extends State<Audios> {
             Text(
               "History of the recorded events",
               style: KavachTheme.subtitleText(
-                  size: width / 30, weight: FontWeight.normal),
+                  size: width / 30,
+                  weight: FontWeight.normal,
+                  color: KavachTheme.nearlyGrey),
             )
           ],
         ),
@@ -45,7 +47,7 @@ class _AudiosState extends State<Audios> {
           return (files != null)
               ? ListView.builder(
                   physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.only(bottom: 40),
+                  padding: const EdgeInsets.only(bottom: 40,top: 20),
                   itemCount: files.length,
                   itemBuilder: (_, index) {
                     return GestureDetector(
@@ -54,7 +56,8 @@ class _AudiosState extends State<Audios> {
                       },
                       child: Container(
                         padding: const EdgeInsets.all(10),
-                        margin: const EdgeInsets.all(10),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 10),
                         alignment: Alignment.center,
                         width: width / 1,
                         decoration: BoxDecoration(
@@ -65,7 +68,8 @@ class _AudiosState extends State<Audios> {
                           children: [
                             Icon(
                               Icons.audio_file_outlined,
-                              size: width / 8,
+                              size: width / 12,
+                              color: KavachTheme.lightGrey,
                             ),
                             const SizedBox(
                               width: 20,
@@ -75,14 +79,14 @@ class _AudiosState extends State<Audios> {
                               children: [
                                 Text(
                                   "Recorded on",
-                                  style: KavachTheme.titleText(
-                                      size: width / 22,
+                                  style: KavachTheme.subtitleText(
+                                      size: width / 27,
                                       weight: FontWeight.bold),
                                 ),
                                 Text(
                                   files[index].name,
                                   style: KavachTheme.subtitleText(
-                                      size: width / 30,
+                                      size: width / 32,
                                       weight: FontWeight.normal),
                                 ),
                               ],

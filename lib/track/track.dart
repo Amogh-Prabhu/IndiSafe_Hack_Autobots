@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, must_be_immutable, unnecessary_null_comparison
 
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:kavach/helpline/layout/selfdefence.dart';
 import 'package:kavach/track/layout/friends.dart';
 import 'package:kavach/track/service/location_service.dart';
 import 'package:kavach/utils/kavach_theme.dart';
@@ -12,7 +13,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class Track extends StatefulWidget {
   Track({super.key, required this.position});
-  Position position;
+  Position? position;
   @override
   State<Track> createState() => _TrackState();
 }
@@ -25,10 +26,18 @@ class _TrackState extends State<Track> {
 
   @override
   void initState() {
-    _currentPosition = CameraPosition(
-      target: LatLng(widget.position.latitude, widget.position.longitude),
-      zoom: 18,
-    );
+    if (widget.position != null) {
+      _currentPosition = CameraPosition(
+        target: LatLng(widget.position!.latitude, widget.position!.longitude),
+        zoom: 18,
+      );
+    } else {
+      _currentPosition = CameraPosition(
+        target: LatLng(0, 0),
+        zoom: 18,
+      );
+    }
+
     super.initState();
   }
 
@@ -68,7 +77,9 @@ class _TrackState extends State<Track> {
                     style: KavachTheme.subtitleText(
                         size: width / 24, weight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(
                     "Tap to select",
                     style: KavachTheme.subtitleText(
@@ -91,7 +102,6 @@ class _TrackState extends State<Track> {
                           color: KavachTheme.lightGrey),
                     ),
                   ),
-                  
                 ],
               ),
             ),
@@ -116,18 +126,25 @@ class _TrackState extends State<Track> {
               color: KavachTheme.darkPink),
         ),
         actions: [
-          Icon(
-            CupertinoIcons.bell,
-            color: KavachTheme.nearlyGrey,
-            size: width / 16,
+          IconButton(
+            onPressed: () {
+              PersistentNavBarNavigator.pushNewScreen(context,
+                  screen: SelfDefence(),
+                  pageTransitionAnimation: PageTransitionAnimation.scale);
+            },
+            icon: Icon(
+              Icons.shield_outlined,
+              color: KavachTheme.nearlyGrey,
+              size: width / 16,
+            ),
           ),
           const SizedBox(
             width: 20,
           ),
           Icon(
-            Icons.menu,
+            Icons.newspaper_outlined,
             color: KavachTheme.nearlyGrey,
-            size: width / 14,
+            size: width / 16,
           ),
           const SizedBox(
             width: 20,
@@ -181,7 +198,7 @@ class _TrackState extends State<Track> {
                       child: ElevatedButton(
                           style: KavachTheme.buttonStyle(
                               backColor: KavachTheme.lightPink),
-                          onPressed: () {
+                          onPressed: () async {
                             bringBottomSheet(width);
                           },
                           child: Text(

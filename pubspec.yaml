@@ -46,12 +46,18 @@ dependencies:
   youtube_player_flutter: ^8.1.2
   camera: ^0.10.4
   record: ^4.4.4
+  geocoding: ^2.1.0
+  location: ^4.4.0
   url_launcher: ^6.1.10
   google_maps_flutter: ^2.2.5
   geolocator: ^9.0.2
   lottie: ^2.3.2
   background_sms: ^0.0.4
+  location_geocoder: ^1.0.5
+  http: ^0.13.4
   audio_waveforms: ^1.0.3
+  cached_network_image: ^2.0.0
+  webview_flutter: ^0.3.22+1
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +84,7 @@ flutter:
   assets:
     - assets/images/
     - assets/gifs/
+    - assets/district.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -98,7 +105,6 @@ flutter:
     - family: MerriWeather
       fonts:
         - asset: assets/fonts/SourceSansPro-Bold.ttf
-        - asset: assets/fonts/Merriweather-Bold.ttf
 
   #
   # For details regarding fonts from package dependencies,
