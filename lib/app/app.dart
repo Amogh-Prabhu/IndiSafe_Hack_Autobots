@@ -3,11 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kavach/helpline/helpline.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:kavach/record/sms/sms_service.dart';
+import 'package:kavach/store/local_storage/service.dart';
+import 'package:kavach/store/models/settings_model.dart';
 import 'package:kavach/track/service/location_service.dart';
 import 'package:kavach/record/record.dart';
 import 'package:kavach/track/track.dart';
 import 'package:kavach/utils/kavach_theme.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:shake/shake.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
@@ -20,22 +24,59 @@ class _AppState extends State<App> {
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
   bool _isLoading = false;
+  late Map<String, dynamic> address;
   LocationService service = LocationService();
   late Position position;
+  late SettingsModel model;
 
   @override
   void initState() {
     getCurrentPosition();
+    getlocalData();
+    ShakeDetector detector = ShakeDetector.autoStart(
+      onPhoneShake: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Shake!'),
+          ),
+        );
+        String message =
+            SmsService.draftMessage(liveLocation: address.toString());
+        SmsService.sendMessage(message, model.contactNumbers!);
+        // Do stuff on phone shake
+      },
+      minimumShakeCount: 1,
+      shakeSlopTimeMS: 500,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.7,
+    );
     super.initState();
+  }
+
+  void getlocalData() {
+    setState(() {
+      _isLoading = true;
+    });
+
+    SharedPreferenceService.getData().then((value) {
+      model = value;
+    });
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   void getCurrentPosition() {
     setState(() {
       _isLoading = true;
     });
-    service.determinePosition().then((value) {
+    LocationService.determinePosition().then((value) {
       if (value != null) {
         position = value;
+        LocationService.getLocation(position).then((value) {
+          address = value;
+        });
+
         setState(() {
           _isLoading = false;
         });
