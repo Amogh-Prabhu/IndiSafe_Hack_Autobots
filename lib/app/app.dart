@@ -1,4 +1,5 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, library_private_types_in_public_api, unused_field, unnecessary_null_comparison
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, library_private_types_in_public_api, unused_field, unnecessary_null_comparison, avoid_print
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kavach/helpline/helpline.dart';
@@ -6,6 +7,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:kavach/record/sms/sms_service.dart';
 import 'package:kavach/store/local_storage/service.dart';
 import 'package:kavach/store/models/settings_model.dart';
+import 'package:kavach/settings/settings.dart';
+import 'package:kavach/sos/sos.dart';
 import 'package:kavach/track/service/location_service.dart';
 import 'package:kavach/record/record.dart';
 import 'package:kavach/track/track.dart';
@@ -33,7 +36,7 @@ class _AppState extends State<App> {
   void initState() {
     getCurrentPosition();
     getlocalData();
-    ShakeDetector detector = ShakeDetector.autoStart(
+    ShakeDetector.autoStart(
       onPhoneShake: () {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -42,7 +45,7 @@ class _AppState extends State<App> {
         );
         String message =
             SmsService.draftMessage(liveLocation: address.toString());
-        SmsService.sendMessage(message, model.contactNumbers!);
+        SmsService.sendMessage(message, model.contactNumbers);
         // Do stuff on phone shake
       },
       minimumShakeCount: 1,
@@ -87,49 +90,91 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    return Builder(builder: (context) {
-      if (_isLoading) {
-        return WillPopScope(
-          onWillPop: () async => false,
-          child: Scaffold(
-            backgroundColor: KavachTheme.pureWhite,
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: width / 15,
-                    width: width / 15,
-                    child: const CircularProgressIndicator(
-                        strokeWidth: 3, color: KavachTheme.darkPink),
+    return StreamBuilder<Position>(
+        stream: Geolocator.getPositionStream(
+            locationSettings: service.locationSettings),
+        builder: (context, snapshot) {
+          if ((snapshot.connectionState == ConnectionState.waiting ||
+                  snapshot.data == null) &&
+              _isLoading) {
+            return WillPopScope(
+              onWillPop: () async => false,
+              child: Scaffold(
+                backgroundColor: KavachTheme.pureWhite,
+                body: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: width / 15,
+                        width: width / 15,
+                        child: const CircularProgressIndicator(
+                            strokeWidth: 3, color: KavachTheme.darkPink),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        child: Text("Rolling In",
+                            style: KavachTheme.titleText(
+                                size: width / 18,
+                                color: KavachTheme.nearlyGrey,
+                                weight: FontWeight.bold)),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text("Fetching Location Details!",
+                            style: KavachTheme.titleText(
+                                size: width / 25,
+                                color: KavachTheme.nearlyGrey.withOpacity(0.8),
+                                weight: FontWeight.w500)),
+                      ),
+                    ],
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    child: Text("Rolling In",
-                        style: KavachTheme.titleText(
-                            size: width / 18,
-                            color: KavachTheme.nearlyGrey,
-                            weight: FontWeight.bold)),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: Text("Fetching Location Details!",
-                        style: KavachTheme.titleText(
-                            size: width / 25,
-                            color: KavachTheme.nearlyGrey.withOpacity(0.8),
-                            weight: FontWeight.w500)),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
-        );
-      }
-      return buildWidget(context);
-    });
+            );
+          } else if (snapshot.data != null) {
+            return buildWidget(context, snapshot.data!);
+          } else {
+            return WillPopScope(
+              onWillPop: () async => false,
+              child: Scaffold(
+                backgroundColor: KavachTheme.pureWhite,
+                body: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: width / 15,
+                        width: width / 15,
+                        child: const CircularProgressIndicator(
+                            strokeWidth: 3, color: KavachTheme.darkPink),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        child: Text("Rolling In",
+                            style: KavachTheme.titleText(
+                                size: width / 18,
+                                color: KavachTheme.nearlyGrey,
+                                weight: FontWeight.bold)),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text("Fetching Location Details!",
+                            style: KavachTheme.titleText(
+                                size: width / 25,
+                                color: KavachTheme.nearlyGrey.withOpacity(0.8),
+                                weight: FontWeight.w500)),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
+        });
   }
 
-  Widget buildWidget(BuildContext context) {
+  Widget buildWidget(BuildContext context, Position position) {
     double size = MediaQuery.of(context).size.width;
     return WillPopScope(
       onWillPop: () async => false,
@@ -161,9 +206,9 @@ class _AppState extends State<App> {
             position: position,
           ),
           Record(),
-          Scaffold(),
+          SizedBox(),
           Help(),
-          Scaffold()
+          SettingsPage(),
         ],
         items: [
           PersistentBottomNavBarItem(
@@ -187,12 +232,19 @@ class _AppState extends State<App> {
               inactiveColorPrimary: Colors.grey,
               activeColorSecondary: Colors.white,
               activeColorPrimary: Colors.redAccent,
+              onPressed: (c) {
+                PersistentNavBarNavigator.pushNewScreen(context,
+                    screen: SOS(
+                      position: position,
+                    ),
+                    pageTransitionAnimation: PageTransitionAnimation.scale);
+              },
               textStyle: KavachTheme.subtitleText(
                   size: size / 35,
                   weight: FontWeight.bold,
                   color: KavachTheme.lightGrey)),
           PersistentBottomNavBarItem(
-              icon: Icon(CupertinoIcons.book_fill, size: size / 17),
+              icon: Icon(CupertinoIcons.phone_arrow_up_right, size: size / 17),
               inactiveColorPrimary: Colors.grey,
               activeColorSecondary: KavachTheme.lightPink,
               activeColorPrimary: KavachTheme.redishPink,

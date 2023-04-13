@@ -1,5 +1,6 @@
-// ignore_for_file: unused_element
+// ignore_for_file: unused_element, body_might_complete_normally_nullable, unused_import, unnecessary_question_mark
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
@@ -7,6 +8,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 
 class LocationService {
+  final LocationSettings locationSettings = const LocationSettings(
+    accuracy: LocationAccuracy.bestForNavigation,
+  );
+
   static Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;

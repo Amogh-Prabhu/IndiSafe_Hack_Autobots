@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import '../models/settings_model.dart';
 
 class FirestoreService {
-  static Future<void> addSettings(
-      {required BuildContext context, required SettingsModel model}) async {
+  static Future<void> addSettings({required SettingsModel model}) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final String uid = auth.currentUser!.uid;
     final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -18,8 +17,7 @@ class FirestoreService {
     }
   }
 
-  static Future<SettingsModel?> fetchSettings(
-      {required BuildContext context}) async {
+  static Future<SettingsModel?> fetchSettings() async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final String uid = auth.currentUser!.uid;
     final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -30,7 +28,7 @@ class FirestoreService {
       final docs = snapshot.data()!;
       return SettingsModel.fromJson(docs);
     } catch (e) {
-      print(e);
+      print("error: " + e.toString());
     }
     return null;
   }

@@ -39,16 +39,16 @@ class _HelpState extends State<Help> {
     "Road Accident",
     "Women Helpline"
   ];
-  List<Icon> i = [
-    const Icon(Icons.local_police),
-    const Icon(Icons.fire_truck),
-    const Icon(Icons.child_care),
-    const Icon(Icons.woman),
-    const Icon(Icons.local_hospital),
-    const Icon(Icons.map),
-    const Icon(Icons.train),
-    const Icon(Icons.car_crash),
-    const Icon(Icons.woman_2),
+  List<IconData> i = [
+    Icons.local_police,
+    Icons.fire_truck,
+    Icons.child_care,
+    Icons.woman,
+    Icons.local_hospital,
+    Icons.map,
+    Icons.train,
+    Icons.car_crash,
+    Icons.woman_2,
   ];
 
   _callNumber(String n) async {
@@ -59,6 +59,7 @@ class _HelpState extends State<Help> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: KavachTheme.pureWhite,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.transparent,
@@ -73,10 +74,12 @@ class _HelpState extends State<Help> {
         actions: [
           IconButton(
             onPressed: () {
-              PersistentNavBarNavigator.pushNewScreen(context, screen: SelfDefence(),pageTransitionAnimation: PageTransitionAnimation.scale);
+              PersistentNavBarNavigator.pushNewScreen(context,
+                  screen: SelfDefence(),
+                  pageTransitionAnimation: PageTransitionAnimation.scale);
             },
             icon: Icon(
-              CupertinoIcons.video_camera,
+              Icons.shield_outlined,
               color: KavachTheme.nearlyGrey,
               size: width / 16,
             ),
@@ -85,9 +88,9 @@ class _HelpState extends State<Help> {
             width: 20,
           ),
           Icon(
-            Icons.newspaper,
+            Icons.newspaper_outlined,
             color: KavachTheme.nearlyGrey,
-            size: width / 14,
+            size: width / 16,
           ),
           const SizedBox(
             width: 20,
@@ -121,6 +124,7 @@ class _HelpState extends State<Help> {
           Expanded(
             child: ListView.builder(
                 physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: 40),
                 itemCount: details.length,
                 itemBuilder: (BuildContext context, int index) {
                   return HelpCard(

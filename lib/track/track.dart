@@ -1,9 +1,8 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, must_be_immutable, unnecessary_null_comparison
 
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kavach/helpline/layout/selfdefence.dart';
@@ -14,7 +13,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class Track extends StatefulWidget {
   Track({super.key, required this.position});
-  Position position;
+  Position? position;
   @override
   State<Track> createState() => _TrackState();
 }
@@ -27,10 +26,18 @@ class _TrackState extends State<Track> {
 
   @override
   void initState() {
-    _currentPosition = CameraPosition(
-      target: LatLng(widget.position.latitude, widget.position.longitude),
-      zoom: 18,
-    );
+    if (widget.position != null) {
+      _currentPosition = CameraPosition(
+        target: LatLng(widget.position!.latitude, widget.position!.longitude),
+        zoom: 18,
+      );
+    } else {
+      _currentPosition = CameraPosition(
+        target: LatLng(0, 0),
+        zoom: 18,
+      );
+    }
+
     super.initState();
   }
 
@@ -121,10 +128,12 @@ class _TrackState extends State<Track> {
         actions: [
           IconButton(
             onPressed: () {
-              PersistentNavBarNavigator.pushNewScreen(context, screen: SelfDefence(),pageTransitionAnimation: PageTransitionAnimation.scale);
+              PersistentNavBarNavigator.pushNewScreen(context,
+                  screen: SelfDefence(),
+                  pageTransitionAnimation: PageTransitionAnimation.scale);
             },
             icon: Icon(
-              CupertinoIcons.video_camera,
+              Icons.shield_outlined,
               color: KavachTheme.nearlyGrey,
               size: width / 16,
             ),
@@ -133,9 +142,9 @@ class _TrackState extends State<Track> {
             width: 20,
           ),
           Icon(
-            Icons.newspaper,
+            Icons.newspaper_outlined,
             color: KavachTheme.nearlyGrey,
-            size: width / 14,
+            size: width / 16,
           ),
           const SizedBox(
             width: 20,

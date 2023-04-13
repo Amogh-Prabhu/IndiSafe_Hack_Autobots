@@ -12,36 +12,42 @@ class HelpCard extends StatelessWidget {
       required this.title});
   String title;
   String subtitle;
-  Icon iconData;
+  IconData iconData;
   VoidCallback callback;
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Container(
-      padding: const EdgeInsets.all(2),
-      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(7),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
           border: Border.all(color: KavachTheme.lightGrey.withOpacity(1)),
-          color: KavachTheme.lightPink.withOpacity(0.05),
+          color: KavachTheme.lightPink.withOpacity(0.03),
           borderRadius: BorderRadius.circular(10)),
       child: ListTile(
-        leading: iconData,
+        leading: Icon(
+          iconData,
+          size: width / 9,
+          color: KavachTheme.lightPink,
+        ),
         title: Text(
           title,
           style: KavachTheme.titleText(
-              size: width / 22,
+              size: width / 19,
               weight: FontWeight.normal,
               color: KavachTheme.nearlyGrey),
         ),
         subtitle: Text(
           subtitle,
           style: KavachTheme.subtitleText(
-              size: width / 29,
+              size: width / 27,
               weight: FontWeight.normal,
               color: KavachTheme.nearlyGrey),
         ),
         trailing: IconButton(
+            color: KavachTheme.redishPink,
+            style: KavachTheme.buttonStyle(backColor: KavachTheme.pureWhite),
             onPressed: () {
               callback();
             },

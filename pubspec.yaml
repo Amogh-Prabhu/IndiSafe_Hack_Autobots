@@ -105,7 +105,6 @@ flutter:
     - family: MerriWeather
       fonts:
         - asset: assets/fonts/SourceSansPro-Bold.ttf
-        - asset: assets/fonts/Merriweather-Bold.ttf
 
   #
   # For details regarding fonts from package dependencies,

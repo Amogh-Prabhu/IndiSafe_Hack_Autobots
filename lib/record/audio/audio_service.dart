@@ -35,7 +35,7 @@ class AudioService {
 
   Future<String?> captureForTime(Duration duration) async {
     await start();
-    return await Future.delayed(const Duration(seconds: 1)).then((_) async {
+    return await Future.delayed(duration).then((_) async {
       String? path = await stop();
       if (path != null) {
         String? url = await StorageService.uploadFile(

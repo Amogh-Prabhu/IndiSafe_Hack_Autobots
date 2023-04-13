@@ -157,6 +157,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           MaterialPageRoute(builder: (_) {
                         return const App();
                       }));
+                    } else {
+                      setState(() {
+                        _isloading = false;
+                      });
                     }
                   }
                 },

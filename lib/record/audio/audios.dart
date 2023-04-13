@@ -5,46 +5,126 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../utils/kavach_theme.dart';
 
-class Audios extends StatelessWidget {
+class Audios extends StatefulWidget {
   const Audios({super.key});
 
   @override
+  State<Audios> createState() => _AudiosState();
+}
+
+class _AudiosState extends State<Audios> {
+  @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: KavachTheme.pureWhite,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        foregroundColor: KavachTheme.darkishGrey,
+        elevation: 0.0,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Records",
+              style: KavachTheme.titleText(
+                  size: width / 18, weight: FontWeight.w600),
+            ),
+            Text(
+              "History of the recorded events",
+              style: KavachTheme.subtitleText(
+                  size: width / 30,
+                  weight: FontWeight.normal,
+                  color: KavachTheme.nearlyGrey),
+            )
+          ],
+        ),
+      ),
       body: FutureBuilder(
         future: StorageService.getFiles(audio: true),
         builder: (context, snapshot) {
           List<Reference>? files = snapshot.data;
           return (files != null)
               ? ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.only(bottom: 40,top: 20),
                   itemCount: files.length,
                   itemBuilder: (_, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: () async {
-                          launchUrlString(await files[index].getDownloadURL());
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: size.height / 10,
-                          width: size.width / 1.2,
-                          decoration: BoxDecoration(
-                              color: Colors.cyan[200],
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Text(
-                            files[index].name,
-                            style: KavachTheme.titleText(
-                              size: 30,
-                              weight: FontWeight.bold,
+                    return GestureDetector(
+                      onTap: () async {
+                        launchUrlString(await files[index].getDownloadURL());
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 10),
+                        alignment: Alignment.center,
+                        width: width / 1,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: KavachTheme.lightGrey.withOpacity(0.5))),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.audio_file_outlined,
+                              size: width / 12,
+                              color: KavachTheme.lightGrey,
                             ),
-                          ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Recorded on",
+                                  style: KavachTheme.subtitleText(
+                                      size: width / 27,
+                                      weight: FontWeight.bold),
+                                ),
+                                Text(
+                                  files[index].name,
+                                  style: KavachTheme.subtitleText(
+                                      size: width / 32,
+                                      weight: FontWeight.normal),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
                       ),
                     );
                   })
-              : const Center(child: CircularProgressIndicator());
+              : Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: width / 15,
+                        width: width / 15,
+                        child: const CircularProgressIndicator(
+                            strokeWidth: 3, color: KavachTheme.darkPink),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        child: Text("Rolling In",
+                            style: KavachTheme.titleText(
+                                size: width / 18,
+                                color: KavachTheme.nearlyGrey,
+                                weight: FontWeight.bold)),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text("Fetching Location Details!",
+                            style: KavachTheme.titleText(
+                                size: width / 25,
+                                color: KavachTheme.nearlyGrey.withOpacity(0.8),
+                                weight: FontWeight.w500)),
+                      ),
+                    ],
+                  ),
+                );
         },
       ),
     );
