@@ -1,7 +1,7 @@
 import 'package:background_sms/background_sms.dart';
 
 class SmsService {
-  String draftMessage(
+  static String draftMessage(
       {String? videoURL,
       String? audioURL,
       String? imageURL,
@@ -23,9 +23,11 @@ class SmsService {
     return message.toString();
   }
 
-  Future<void> sendMessage(String message, List<String> numbers) async {
+  static Future<void> sendMessage(String message, List<String> numbers) async {
     for (String num in numbers) {
-      await BackgroundSms.sendMessage(phoneNumber: num, message: message);
+      var x =
+          await BackgroundSms.sendMessage(phoneNumber: num, message: message);
+      print(x);
     }
   }
 }

@@ -31,6 +31,7 @@ class _MyAppState extends State<MyApp> {
   checkUser() async {
     auth.authStateChanges().listen((User? user) {
       if (user != null) {
+        print(user);
         setState(() {
           isLoggedIn = true;
         });
