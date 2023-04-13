@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kavach/helpline/layout/selfdefence.dart';
+import 'package:kavach/news/news.dart';
 import 'package:kavach/track/layout/friends.dart';
 import 'package:kavach/track/service/location_service.dart';
 import 'package:kavach/utils/kavach_theme.dart';
@@ -141,10 +142,17 @@ class _TrackState extends State<Track> {
           const SizedBox(
             width: 20,
           ),
-          Icon(
-            Icons.newspaper_outlined,
-            color: KavachTheme.nearlyGrey,
-            size: width / 16,
+          IconButton(
+            onPressed: () {
+              PersistentNavBarNavigator.pushNewScreen(context,
+                  screen: News(),
+                  pageTransitionAnimation: PageTransitionAnimation.scale);
+            },
+            icon: Icon(
+              Icons.newspaper,
+              color: KavachTheme.nearlyGrey,
+              size: width / 16,
+            ),
           ),
           const SizedBox(
             width: 20,
