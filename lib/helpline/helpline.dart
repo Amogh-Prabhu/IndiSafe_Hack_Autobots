@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:kavach/helpline/widgets/help_card.dart';
+import 'package:kavach/news/news.dart';
 import 'package:kavach/utils/kavach_theme.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -87,10 +88,17 @@ class _HelpState extends State<Help> {
           const SizedBox(
             width: 20,
           ),
-          Icon(
-            Icons.newspaper_outlined,
-            color: KavachTheme.nearlyGrey,
-            size: width / 16,
+          IconButton(
+            onPressed: () {
+              PersistentNavBarNavigator.pushNewScreen(context,
+                  screen: News(),
+                  pageTransitionAnimation: PageTransitionAnimation.scale);
+            },
+            icon: Icon(
+              Icons.newspaper,
+              color: KavachTheme.nearlyGrey,
+              size: width / 16,
+            ),
           ),
           const SizedBox(
             width: 20,

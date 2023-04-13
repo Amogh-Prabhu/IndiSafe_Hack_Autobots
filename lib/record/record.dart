@@ -4,6 +4,7 @@ import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kavach/helpline/layout/selfdefence.dart';
+import 'package:kavach/news/news.dart';
 import 'package:kavach/record/audio/audio_service.dart';
 import 'package:kavach/record/audio/audios.dart';
 import 'package:kavach/record/widgets/history_widget.dart';
@@ -91,10 +92,17 @@ class _RecordState extends State<Record> {
           const SizedBox(
             width: 20,
           ),
-          Icon(
-            Icons.newspaper_outlined,
-            color: KavachTheme.nearlyGrey,
-            size: width / 16,
+          IconButton(
+            onPressed: () {
+              PersistentNavBarNavigator.pushNewScreen(context,
+                  screen: News(),
+                  pageTransitionAnimation: PageTransitionAnimation.scale);
+            },
+            icon: Icon(
+              Icons.newspaper,
+              color: KavachTheme.nearlyGrey,
+              size: width / 16,
+            ),
           ),
           const SizedBox(
             width: 20,
